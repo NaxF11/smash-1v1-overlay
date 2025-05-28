@@ -34,7 +34,7 @@ Este **(overlay)** para *Smash Remix 1.5.2*, está diseñado para mostrar en **O
    - Puedes añadir el archivo HTML generado como una fuente de navegador en OBS para mostrar el overlay con las estadísticas.
 
 
-**Lógica de conteo de victorias**
+## Lógica de conteo de victorias
   - NO se suma una victoria si los jugadores reinician la partida con Start + A + B + Z + R.
 
   - SÍ se cuenta una victoria si un jugador gana la partida y hacen "salty runback" justo después de que el juego muestra "GAME SET".
