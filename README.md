@@ -29,8 +29,8 @@ Este **(overlay)** para *Smash Remix 1.5.2*, está diseñado para mostrar en **O
 ## Para update_pointers.exe
 
 **1. Estructura requerida:**
-├── update_pointers.py  (en directorio raíz)
-└── update_pointers.spec
+- ├── update_pointers.py  (en directorio raíz)
+- └── update_pointers.spec
 
 **2. Compilar:**
 - Ejecuta desde la terminal:
