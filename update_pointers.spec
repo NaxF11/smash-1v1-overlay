@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=r'C:\Users\Ignacio\Downloads\project64k-legacy (1)\smash-overlay\ssb64.ico',
+    icon=r'ssb64.ico',
 )
