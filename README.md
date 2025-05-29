@@ -11,27 +11,38 @@ Este **(overlay)** para *Smash Remix 1.5.2*, está diseñado para mostrar en **O
 -  Posibilidad de editar libremente el HTML y CSS para adaptar el diseño visual.
 -  Probado solamente con Project64KSE
 
-## ⚙️ Cómo usar
+## ⚙️ Cómo compilar
+## Para main.exe (Programa principal)
 
-1. **Ejecuta `update_pointers.py`**
-   - Esto generará las direcciones de memoria necesarias para el funcionamiento del overlay.
+**1. Estructura requerida:**
+├── main.py            (en directorio raíz)
+├── game_assets.py     (en directorio raíz)
+├── config.json        (crear manualmente si no existe)
+├── overlay/           (carpeta vacía)
+└── main.spec
 
-2. **Configura los nombres de los jugadores**
-   - Abre el archivo `config.json` y edita los campos correspondientes para el nombre del **Player 1** y **Player 2**.
+**2. Compilar:**
+- Ejecuta desde la terminal:
+   pyinstaller main.spec
+- El ejecutable se generará en dist/main.exe.
 
-   **json**
-   {
-     "player1_name": "Jugador1",
-     "player2_name": "Jugador2"
-   }
+## Para update_pointers.exe
 
-3. Carga el ROM de Smash Remix 1.5.2 en el emulador **Project64KSE**
+**1. Estructura requerida:**
+├── update_pointers.py  (en directorio raíz)
+└── update_pointers.spec
 
-4. Ejecuta main.py
-   - Asegúrate de que el juego esté corriendo. El script comenzará a actualizar los stats en tiempo real.
+**2. Compilar:**
+- Ejecuta desde la terminal:
+   pyinstaller update_pointers.spec
+- El ejecutable se generará en dist/update_pointers.exe.
 
-5. Coloca el archivo HTML como fuente en OBS
-   - Puedes añadir el archivo HTML generado como una fuente de navegador en OBS para mostrar el overlay con las estadísticas.
+## Notas importantes:
+Los archivos .spec ya contienen la configuración necesaria para la compilación (incluyendo parámetros como --onefile o --icon).
+
+No es necesario modificar los archivos .spec a menos que requieras cambios en la configuración de PyInstaller.
+
+Los ejecutables generados funcionarán independientemente de su ubicación después de la compilación.
 
 
 ## Lógica de conteo de victorias
