@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-	icon=r'C:\Users\Ignacio\Downloads\project64k-legacy (1)\smash-overlay\metal_mario.ico',
+	icon=r'metal_mario.ico',
     name='main',
     debug=False,
     bootloader_ignore_signals=False,
