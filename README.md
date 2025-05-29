@@ -15,11 +15,11 @@ Este **(overlay)** para *Smash Remix 1.5.2*, está diseñado para mostrar en **O
 ## Para main.exe (Programa principal)
 
 **1. Estructura requerida:**
-├── main.py            (en directorio raíz)
-├── game_assets.py     (en directorio raíz)
-├── config.json        (crear manualmente si no existe)
-├── overlay/           (carpeta vacía)
-└── main.spec
+- ├── main.py            (en directorio raíz)
+- ├── game_assets.py     (en directorio raíz)
+- ├── config.json        (crear manualmente si no existe)
+- ├── overlay/           (carpeta vacía)
+- └── main.spec
 
 **2. Compilar:**
 - Ejecuta desde la terminal:
