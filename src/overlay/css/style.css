@@ -19,9 +19,9 @@ body {
 /* Contenedor principal ajustado */
 .container {
     position: absolute;
-    top: 720px;    /* 15px más abajo */
-    left: 1380px;  /* 15px más a la derecha */
-    width: calc(1920px - 1384px); /* 525px */
+    top: 616px;    /* 15px más abajo */
+    left: 1377px;  /* 15px más a la derecha 1380*/
+    width: calc(1920px - 1384px); /* 525px 84*/
     height: calc(1080px - 720px); /* 405px */
     padding: 10px;
     transform: none !important;
@@ -39,8 +39,8 @@ body {
 }
 
 .character-box img {
-    width: 50px;  /* Reducido */
-    height: 50px; /* Reducido */
+    width: 32px;  /* Reducido */
+    height: 40px; /* Reducido */
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
 }
 
@@ -92,27 +92,27 @@ body {
 
 .stage {
     font-size: 1.2em;
-    color: #919191;
+    color: #d3dcdf;
 }
 
 .playing {
     font-size: 1.2em;
-    color: #cdc0c0;
+    color: #cc68f4;
 }
 
 .state {
     font-size: 1.1em;
-    color: #b51818;
+    color: #e9d74f;
 }
 
 .total {
     font-size: 1.0em;
-    color: #72e8ff;
+    color: #d15353;
 }
 
 /* Efectos minimizados */
 .damage-fill {
-    height: 100%; /* ¡Faltaba esta línea! */
+    height: 100%; 
     width: 0%;
     min-width: 3%; /* Para que sea visible desde 0% */
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animación suave */
@@ -120,4 +120,88 @@ body {
     box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2); /* Efecto de profundidad */
     position: relative;
     z-index: 1;
+}
+
+
+.match-history {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 6px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+
+
+
+.match-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    font-size: 12px;
+    gap: 4px;
+    height: 36px; /* Limita el alto */
+}
+
+
+/* Imágenes más pequeñas pero visibles */
+.match-entry img {
+    width: 24px;
+    height: 32px;
+    border-radius: 3px;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+}
+
+/* Contenedor de personaje optimizado */
+.character-container {
+    display: flex;
+    align-items: center;
+    min-width: 32px;
+}
+
+/* Resultado compacto */
+.result {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 1px 6px;
+    border-radius: 8px;
+    min-width: 36px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+
+.winner {
+    color: #4caf50;
+    border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.loser {
+    color: #f44336;
+    border: 1px solid rgba(244, 67, 54, 0.5);
+}
+
+.draw {
+    color: #ffeb3b;
+    border: 1px solid rgba(255, 235, 59, 0.5);
+}
+
+
+.match-history::-webkit-scrollbar {
+    width: 6px;
+}
+
+.match-history::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.match-history::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }
