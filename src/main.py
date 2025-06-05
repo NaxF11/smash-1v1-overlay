@@ -70,13 +70,17 @@ def main():
     p2_damage_addr = int(config['Damage_P2'], 16)
     game_state_addr = int(config['State_Game'], 16)
     ingame_music = int(config['ingame_music'], 16)
-    
+
     stocks = config['stocks_iniciales']
     p1_wins = p2_wins = 0
 
-    # Flags
     victoria_registrada = False
     juego_activo = False
+
+    # Matchup tracking
+    historial_file = "match_history.json"
+    historial = []
+    matchup_actual = {"p1_char": None, "p2_char": None}
 
     print("Monitor activo (Ctrl+C para salir)")
 
@@ -95,16 +99,17 @@ def main():
             stage = game_assets.STAGE_NAMES.get(stage_id, "Desconocido")
             music_id = mem.read_bytes(ingame_music, 1)[0]
             actualMusic = ""
-            
-            # Lógica para mostrar correctamente el título de la música que está actualmente sonando
-            if (stage_id >= 0 and stage_id <= 9) or stage_id == 25 or stage_id == 36 or stage_id == 37:      
-                if (game_state_id == 22):
-                    actualMusic = game_assets.VANILLA_MUSIC.get(music_id, game_assets.REMIX_MUSIC.get(music_id, "Desconocido"))
 
-            # Activar juego cuando ambos están por debajo del máximo
+            # Música
+            if stage_id in [0,1,2,3,4,5,6,7,8,9,25,36,37]:
+                if game_state_id == 22:
+                    actualMusic = game_assets.VANILLA_MUSIC.get(music_id, game_assets.REMIX_MUSIC.get(music_id, "Desconocido"))
+            
+
+            # Activar juego
             if not juego_activo and deaths_p1 < stocks and deaths_p2 < stocks:
                 juego_activo = True
-                victoria_registrada = False  # permitir una nueva victoria
+                victoria_registrada = False
 
             # Verificar ganadores
             if juego_activo and not victoria_registrada:
@@ -118,6 +123,31 @@ def main():
                     victoria_registrada = True
                     juego_activo = False
                     time.sleep(5)
+
+            # Detectar cambio de matchup
+            if game_state_id == 22:
+                if matchup_actual["p1_char"] is None:
+                    matchup_actual["p1_char"] = p1_char
+                    matchup_actual["p2_char"] = p2_char
+                    p1_wins = 0
+                    p2_wins = 0
+                elif p1_char != matchup_actual["p1_char"] or p2_char != matchup_actual["p2_char"]:
+                    # Solo guardar si hubo al menos una victoria
+                    if p1_wins > 0 or p2_wins > 0:
+                        historial.append({
+                            "p1_char": game_assets.CHARACTER_IMAGES.get(matchup_actual["p1_char"], "Desconocido"),
+                            "p2_char": game_assets.CHARACTER_IMAGES.get(matchup_actual["p2_char"], "Desconocido"),
+                            "result": {"p1": p1_wins, "p2": p2_wins}
+                        })
+                        with open(historial_file, "w") as f:
+                            json.dump(historial, f, indent=2)
+
+                    matchup_actual["p1_char"] = p1_char
+                    matchup_actual["p2_char"] = p2_char
+                    p1_wins = 0
+                    p2_wins = 0
+                    juego_activo = False
+                    victoria_registrada = False
 
             # Guardar datos continuamente
             guardar_datos(
@@ -136,7 +166,7 @@ def main():
         except Exception as e:
             nombreError = type(e).__name__
             if nombreError == "MemoryReadError":
-                print("\nError: No se puede leer la memoria en el emulador. \nCausas posibles:\n1) El emulador está cerrado. Por favor, inicia el emulador y vuelve a intentarlo.\n2) Las direcciones de memoria están desactualizadas. Ejecuta el script pointer.py para actualizarlas.")
+                print("\nError: No se puede leer la memoria en el emulador. \nCausas posibles:\n1) El emulador est\u00e1 cerrado. Por favor, inicia el emulador y vuelve a intentarlo.\n2) Las direcciones de memoria est\u00e1n desactualizadas. Ejecuta el script pointer.py para actualizarlas.")
             else:
                 print(f"\nTipo de error: {type(e).__name__}\n")
                 print(f"Error inesperado: {str(e)}")
