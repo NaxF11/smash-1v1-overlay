@@ -1,5 +1,4 @@
 const CHARACTER_IMAGES = {
-    // Tu diccionario de personajes aquí
     0: "mario.png",
     1: "fox.png",
     2: "donkey_kong.png",
@@ -90,7 +89,7 @@ function updatePlayer(playerData, prefix) {
     
     // Actualizar barra de daño
     const damageFill = document.getElementById(`${prefix}-damage`);
-    const currentDamage = parseFloat(playerData.damage); // Eliminar toFixed()
+    const currentDamage = parseFloat(playerData.damage);
     const maxDamage = 130; // Máximo a 130%
     const width = Math.min((currentDamage / maxDamage) * 100, 100);
     
@@ -114,7 +113,82 @@ function updatePlayer(playerData, prefix) {
         )`;
 }
 
+// Cambia la función updateMatchHistory
+async function updateMatchHistory() {
+    try {
+        
+        const response = await fetch('../match_history.json');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const history = await response.json();
+        const container = document.getElementById('match-history');
+        
+        // Limpiar el contenedor
+        container.innerHTML = '';
+        
+        // Verificar si hay datos
+        if (!history || history.length === 0) {
+            container.innerHTML = '<div class="no-matches">No hay historial de partidas aún</div>';
+            return;
+        }
+        
+        // Procesar las últimas 9 partidas (más recientes primero)
+        history.slice(-9).reverse().forEach(match => {
+            const matchElement = createMatchElement(match);
+            container.appendChild(matchElement);
+        });
+        
+    } catch (error) {
+        console.error('Error al cargar el historial:', error);
+        showErrorInContainer(error);
+    }
+}
+
+// Función auxiliar para crear elementos de partida
+function createMatchElement(match) {
+    const p1Score = match.result.p1 || 0;
+    const p2Score = match.result.p2 || 0;
+    const p1Won = p1Score > p2Score;
+    
+    const div = document.createElement('div');
+    div.className = 'match-entry';
+    
+    div.innerHTML = `
+        <div class="character-container">
+            <img src="assets/characters/${match.p1_char}" 
+                 alt="${match.p1_char.replace('.png', '')}"
+                 onerror="this.onerror=null;this.src='assets/characters/random.png'">
+        </div>
+        
+        <span class="result ${p1Won ? 'winner' : p2Score > p1Score ? 'loser' : 'draw'}">
+            ${p1Score}-${p2Score}
+        </span>
+        
+        <div class="character-container">
+            <img src="assets/characters/${match.p2_char}" 
+                 alt="${match.p2_char.replace('.png', '')}"
+                 onerror="this.onerror=null;this.src='assets/characters/random.png'">
+        </div>
+    `;
+    
+    return div;
+}
+
+// Función para mostrar errores
+function showErrorInContainer(error) {
+    const container = document.getElementById('match-history');
+    container.innerHTML = `
+        <div class="error-message">
+            Error cargando historial<br>
+            <small>${error.message}</small>
+        </div>`;
+}
 
 
-// Actualizar cada 500ms
+// Actualizar cada 150ms
 setInterval(updateData, 150);
+
+setInterval(updateMatchHistory, 5000); 
