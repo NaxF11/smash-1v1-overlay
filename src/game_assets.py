@@ -9,6 +9,7 @@ def resource_path(relative_path):
     return os.path.join(os.path.abspath("."), relative_path)
 
 
+
 STAGE_NAMES = {
     0: "Peachs Castle",
     1: "Sector Z",
