@@ -9,9 +9,6 @@
     <div class="container">
         <!-- Jugador 1 -->
         <div class="player-container p1">
-            <div class="character-box">
-                <img id="p1-character" src="assets/characters/random.png" alt="P1 Character">
-            </div>
             <div class="stats-box">
                 <div class="player-name" id="p1-name">Nax</div>
                 <div class="wins-container">
@@ -21,6 +18,9 @@
                 <div class="damage-bar">
                     <div class="damage-fill" id="p1-damage"></div>
                 </div>
+            </div>
+            <div class="character-box">
+                <img id="p1-character" src="assets/characters/random.png" alt="P1 Character">
             </div>
         </div>
 
@@ -48,6 +48,12 @@
             <div class="state" id="state">In Game</div>
             <div class="total" id="total">Total: 0</div>
         </div>
+
+        <div class="match-history" id="match-history">
+        <!-- Match history will appear here -->
+         </div>
+</div>
+
     </div>
 
     <script src="js/script.js"></script>
